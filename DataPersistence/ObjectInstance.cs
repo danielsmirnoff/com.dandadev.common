@@ -8,6 +8,8 @@
 [System.Serializable]
 public class ObjectInstance : IDataPersistence
 {
+    public bool isLoaded { get; set; }
+    
     public readonly Data data;
     public int numID;
     public string objectID;

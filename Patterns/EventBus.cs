@@ -29,6 +29,8 @@ public static class EventBus
     public static void Raise<T>(T evt)
     {
         if (events.TryGetValue(typeof(T), out var del))
+        {
             (del as Action<T>)?.Invoke(evt);
+        }
     }
 }

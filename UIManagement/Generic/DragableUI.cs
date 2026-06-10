@@ -6,14 +6,15 @@ using UnityEngine.EventSystems;
 
 public class DragableUI : SelectableUI, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    public bool CanDrag { get; protected set; }
-    public bool CanDrop { get; protected set; }
+    public bool CanDrag { get; protected set; } = true;
+    public bool CanDrop { get; protected set; } = true;
+    
+    public Transform DragHolder { get; protected set; }
     
     [Title("Inspector")] 
     [SerializeField] protected bool showDragableEvents = false;
 
     [Title("Drag and Drop")] 
-    [SerializeField] private Transform dragHolder;
     [SerializeField] private Transform visualHolder;
     [SerializeField] protected CanvasGroup visual;
     
@@ -31,31 +32,34 @@ public class DragableUI : SelectableUI, IBeginDragHandler, IDragHandler, IEndDra
 
     public virtual void OnBeginDrag(PointerEventData eventData)
     {
-        visual.alpha = .5f;
+        if(!CanDrag) return;
         visual.blocksRaycasts = false;
+        
+        visual.transform.SetParent(DragHolder);
+        
         OnStartDrag?.Invoke();
-        //visual.transform.SetParent(dragHolder);
     }
 
     public virtual void OnDrag(PointerEventData eventData)
     {
+        if(!CanDrag) return;
         visual.transform.localPosition += (Vector3)(eventData.delta / scaleFactor);
         OnDragTick?.Invoke();
     }
 
     public virtual void OnEndDrag(PointerEventData eventData)
     {
-        visual.alpha = 1f;
+        if(!CanDrag) return;
         visual.blocksRaycasts = true;
         
+        visual.transform.SetParent(visualHolder);
         visual.transform.localPosition = Vector3.zero;
         OnStopDrag?.Invoke();
-        
-        //visual.transform.SetParent(visualHolder);
     }
 
     public virtual void OnDrop(PointerEventData eventData)
     {
+        if(!CanDrop) return;
         OnDropped?.Invoke();
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// A generic menu class to handle the view logic
@@ -8,31 +10,46 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 public class Menu : MonoBehaviour
 {
-    public virtual string GetMenuID() => "Empty";
+    [Tooltip("Only needed if not a unique class")]
+    [SerializeField] private string id;
+
+    // Events
+    public UnityEvent OnMenuOpened { get; private set; } = new();
+    public UnityEvent OnMenuClosed { get; private set; } = new();
+    
+    public virtual string GetMenuID() => id;
+    public virtual bool ShouldHideOnOtherShow() => true;
+    public virtual bool ShouldHideOnStart() => true;
 
     //Protected
     protected bool isVisible = false;
+    /// <returns>Whether or not to show / hide the attached CanvasGroup when the menu is toggled.</returns>
+    protected virtual bool AutoCanvasGroup() => true;
 
-    //Private
-    private CanvasGroup _canvasGroup;
+    //Protected
+    protected CanvasGroup _canvasGroup;
+    protected UIController _uiController;
 
-    public virtual void Awake()
+    public virtual void Initialize(UIController uiController)
     {
         _canvasGroup = GetComponent<CanvasGroup>();
+        _uiController = uiController;
     }
-
-    public virtual void Initialize() {}
 
     public virtual void Show()
     {
         isVisible = true;
-        _canvasGroup.ShowGroup();
+        if (AutoCanvasGroup())
+            _canvasGroup.ShowGroup();
+        OnMenuOpened.Invoke();
     }
 
     public virtual void Hide()
     {
         isVisible = false;
-        _canvasGroup.HideGroup();
+        if (AutoCanvasGroup())
+            _canvasGroup.HideGroup();
+        OnMenuClosed.Invoke();
     }
     
     public virtual void Toggle()
@@ -40,11 +57,13 @@ public class Menu : MonoBehaviour
         isVisible = !isVisible;
         if (isVisible)
         {
-            _canvasGroup.ShowGroup();
+            Show();
         }
         else
         {
-            _canvasGroup.HideGroup();
+            Hide();
         }
     }
+
+    public bool GetIsVisible() { return isVisible; }
 }

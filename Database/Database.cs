@@ -1,18 +1,24 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Database<T> : SerializedScriptableObject
 {
     [Title("Database Autofill")] 
     public string[] foldersToSearch;
     public bool recursiveSearch;
+    [ShowInInspector, ReadOnly] private int databaseCount;
     [SerializeField] private Dictionary<string, T> database = new();
 
+#if UNITY_EDITOR
     [Button("Refresh Database")]
     protected virtual void SearchFolders()
     {
+
         database.Clear();
         
         //Find all assets in the specified folder
@@ -37,12 +43,16 @@ public class Database<T> : SerializedScriptableObject
                 database[id] = typedObj;
             }
         }
+        databaseCount = database.Count;
+
     }
+#endif
+
     protected virtual string GetId(T obj) => null;
 
     public T GetByID(string id)
     {
-        return database[id];
+        return database.GetValueOrDefault(id);
     }
     
     // public Data GetByID(int id)

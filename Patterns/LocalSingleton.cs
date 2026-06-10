@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 /// <summary>
 /// Local Singletons only exist in the current scene without the needs to persist
@@ -21,5 +22,18 @@ public class LocalSingleton<T> : MonoBehaviour where T : MonoBehaviour
         
         instance = this as T;
         _initialized = true;
+    }
+
+    public static bool TryGet(out T instance)
+    {
+        if (LocalSingleton<T>.instance != null)
+        {
+            instance = LocalSingleton<T>.instance;
+            return true;
+        } else {
+            instance = null;
+            Debug.LogWarning("No Instance of LocalGameManager!");
+            return false;
+        }
     }
 }

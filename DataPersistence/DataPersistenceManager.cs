@@ -10,6 +10,7 @@ public class DataPersistenceManager : MonoBehaviour
     private static string fileName = "save";
     
     [Header("File Storage Config")]
+    [HideInInspector] public string saveName;
     [HideInInspector] public int saveID;
 
     public UnityEvent<GameData> OnSave { get; private set; } = new();
@@ -44,19 +45,23 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     #region Save Management
-    
-    public void SwitchSaveID(int saveID)
+
+    public void SetSaveID(string saveName, int saveID)
     {
+        this.saveName = saveName;
         this.saveID = saveID;
     }
+    
+    public void DeleteSave(string saveName, int saveID)
+    {
+        dataHandler.Delete(saveID);
+    }
+    
     public void NewGame()
     {
         gameData = CreateNewData();
     }
-    public void DeleteSave(int saveID)
-    {
-        dataHandler.Delete(saveID);
-    }
+
     
     public GameData GetSaveData(int saveID)
     {
