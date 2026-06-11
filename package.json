@@ -1,0 +1,17 @@
+﻿{
+  "name": "com.dandadev.common",
+  "version": "1.0.0",
+  "displayName": "DandaDev Common Library",
+  "description": "A library with common design patterns and utilities",
+  "unity": "6.4",
+  "documentationUrl": "https://github.com/angrysharkstudio/unity-ai-npc-debugging#readme",
+  "changelogUrl": "https://github.com/angrysharkstudio/unity-ai-npc-debugging/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/angrysharkstudio/unity-ai-npc-debugging/blob/main/LICENSE.md",
+  "dependencies": {},
+  "keywords": [
+    "common",
+    "design",
+    "utility",
+    "utilities"
+  ]
+}
