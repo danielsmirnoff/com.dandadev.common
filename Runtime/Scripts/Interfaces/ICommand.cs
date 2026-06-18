@@ -1,4 +1,7 @@
-﻿public interface ICommand {
-    void Execute();
-    void Undo();
+﻿namespace CommonDan
+{
+    public interface ICommand {
+        void Execute();
+        void Undo();
+    }
 }

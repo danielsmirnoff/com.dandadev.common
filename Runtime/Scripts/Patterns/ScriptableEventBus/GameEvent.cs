@@ -2,40 +2,45 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "EngineData/EventBus/Game Event")]
-public class GameEvent : ScriptableObject
+namespace CommonDan
 {
-    private readonly List<IGameEventListener> _listeners = new();
-    private readonly List<Action> _actions = new();
-
-    public void Raise()
+    [CreateAssetMenu(menuName = "EngineData/EventBus/Game Event")]
+    public class GameEvent : ScriptableObject
     {
-        for (int i = _listeners.Count - 1; i >= 0; i--)
+        private readonly List<IGameEventListener> _listeners = new();
+        private readonly List<Action> _actions = new();
+
+        public void Raise()
         {
-            _listeners[i].OnEventRaised();
+            for (int i = _listeners.Count - 1; i >= 0; i--)
+            {
+                _listeners[i].OnEventRaised();
+            }
+
+            for (int i = _actions.Count - 1; i >= 0; i--)
+            {
+                _actions[i]?.Invoke();
+            }
         }
 
-        for (int i = _actions.Count - 1; i >= 0; i--)
+        public void Subscribe(IGameEventListener l)
         {
-            _actions[i]?.Invoke();
+            if (!_listeners.Contains(l)) _listeners.Add(l);
         }
+
+        public void Unsubscribe(IGameEventListener l) => _listeners.Remove(l);
+
+        public void Subscribe(Action a)
+        {
+            if (!_actions.Contains(a)) _actions.Add(a);
+        }
+
+        public void Unsubscribe(Action a) => _actions.Remove(a);
     }
 
-    public void Subscribe(IGameEventListener l)
+
+    public interface IGameEventListener
     {
-        if (!_listeners.Contains(l)) _listeners.Add(l);
+        void OnEventRaised();
     }
-    public void Unsubscribe(IGameEventListener l) => _listeners.Remove(l);
-
-    public void Subscribe(Action a)
-    {
-        if (!_actions.Contains(a)) _actions.Add(a);
-    }
-    
-    public void Unsubscribe(Action a) => _actions.Remove(a);
-}
-
-public interface IGameEventListener
-{
-    void OnEventRaised();
 }

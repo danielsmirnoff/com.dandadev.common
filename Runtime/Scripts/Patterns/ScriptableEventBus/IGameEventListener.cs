@@ -1,4 +1,7 @@
-public interface IGameEventListener<T>
+namespace CommonDan
 {
-    void OnEventRaised(T value);
+    public interface IGameEventListener<T>
+    {
+        void OnEventRaised(T value);
+    }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-public static class StringExtensions
+namespace CommonDan
 {
-    public static string CapitalizeFirstLetter(this string str)
+    public static class StringExtensions
     {
-        if (String.IsNullOrEmpty(str)) return str;
-        return char.ToUpper(str[0]) + str.Substring(1);
+        public static string CapitalizeFirstLetter(this string str)
+        {
+            if (String.IsNullOrEmpty(str)) return str;
+            return char.ToUpper(str[0]) + str.Substring(1);
+        }
     }
 }

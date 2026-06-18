@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 
-public static class UIExtensions
+namespace CommonDan
 {
-    public static void ShowGroup(this CanvasGroup group)
+    public static class UIExtensions
     {
-        if(group == null) return;
-        group.alpha = 1;
-        group.interactable = true;
-        group.blocksRaycasts = true;
-    }
+        public static void ShowGroup(this CanvasGroup group)
+        {
+            if(group == null) return;
+            group.alpha = 1;
+            group.interactable = true;
+            group.blocksRaycasts = true;
+        }
 
-    public static void HideGroup(this CanvasGroup group)
-    {
-        if(group == null) return;
-        group.alpha = 0;
-        group.interactable = false;
-        group.blocksRaycasts = false;
+        public static void HideGroup(this CanvasGroup group)
+        {
+            if(group == null) return;
+            group.alpha = 0;
+            group.interactable = false;
+            group.blocksRaycasts = false;
+        }
     }
 }

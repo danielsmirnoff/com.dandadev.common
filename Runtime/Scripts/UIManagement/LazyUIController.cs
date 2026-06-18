@@ -2,22 +2,25 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class LazyUIController : UIController
+namespace CommonDan
 {
-    [Title("Screens")]
-    [SerializeField] private List<UIScreenPair> _registeredScreens;
-
-    protected override bool TryCreateMenu(string id)
+    public class LazyUIController : UIController
     {
-        foreach (UIScreenPair screen in _registeredScreens)
+        [Title("Screens")]
+        [SerializeField] private List<UIScreenPair> _registeredScreens;
+
+        protected override bool TryCreateMenu(string id)
         {
-            if (screen.id == id)
+            foreach (UIScreenPair screen in _registeredScreens)
             {
-                GameObject obj = Instantiate(screen.prefab);
-                return true;
+                if (screen.id == id)
+                {
+                    GameObject obj = Instantiate(screen.prefab);
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
     }
 }
 

@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public interface IDataPersistence
+namespace CommonDan
 {
-    void LoadData(GameData data)
+    public interface IDataPersistence
     {
-    }
+        void LoadData(GameData data)
+        {
+        }
 
-    void SaveData(GameData data);
+        void SaveData(GameData data);
+    }
 }
