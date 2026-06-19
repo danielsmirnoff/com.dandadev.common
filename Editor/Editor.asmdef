@@ -1,11 +1,13 @@
 {
-    "name": "DandaDev.Common.Runtime",
-    "rootNamespace": "CommonDan",
+    "name": "DandaDev.Common.Editor",
+    "rootNamespace": "CommonDan.Editor",
     "references": [
-        "GUID:0c752da273b17c547ae705acf0f2adf2",
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "DandaDev.Common.Unity",
+        "DandaDev.Common.Runtime"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

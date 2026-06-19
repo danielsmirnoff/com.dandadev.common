@@ -2,10 +2,10 @@ using CommonDan;
 using UnityEditor;
 using UnityEngine;
 
-namespace CommonDan
+namespace CommonDan.Editor
 {
     [CustomEditor(typeof(GameEvent))]
-    public class GameEventEditor : Editor
+    public class GameEventEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
@@ -15,10 +15,9 @@ namespace CommonDan
 
         }
     }
-
-#if UNITY_EDITOR
+    
     [CustomEditor(typeof(IntGameEvent))]
-    public class IntGameEventEditor : Editor
+    public class IntGameEventEditor : UnityEditor.Editor
     {
         private int _testValue;
 
@@ -30,5 +29,4 @@ namespace CommonDan
             if (GUILayout.Button("Raise")) ((IntGameEvent)target).Raise(_testValue);
         }
     }
-#endif
 }
