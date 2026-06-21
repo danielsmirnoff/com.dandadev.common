@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace CommonDan
         [Title("Database Autofill")] 
         public string[] foldersToSearch;
         [ShowInInspector, ReadOnly] private int databaseCount;
-        [SerializeField] private Dictionary<string, T> database = new();
+        [SerializeField] protected Dictionary<string, T> database = new();
 
 #if UNITY_EDITOR
         [Button("Refresh Database")]
@@ -57,10 +58,9 @@ namespace CommonDan
             return database.GetValueOrDefault(id);
         }
 
-        // public Data GetByID(int id)
-        // {
-        //     return database[id];
-        // }
-
+        public List<T> GetAll()
+        {
+            return database.Values.ToList();
+        }
     }
 }
