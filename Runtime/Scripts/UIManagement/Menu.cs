@@ -22,8 +22,8 @@ namespace CommonDan
         public UnityEvent OnMenuClosed { get; private set; } = new();
     
         public virtual string GetMenuID() => id;
-        public virtual bool ShouldHideOnOtherShow() => showOnStart;
-        public virtual bool ShouldHideOnStart() => hideOnOtherShow;
+        public virtual bool ShouldHideOnOtherShow() => hideOnOtherShow;
+        public virtual bool ShouldShowOnStart() => showOnStart;
         public bool GetIsVisible() => isVisible;
 
         //Protected

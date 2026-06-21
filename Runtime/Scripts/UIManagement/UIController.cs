@@ -33,7 +33,8 @@ namespace CommonDan
             if(registerToList) _registeredMenus.Add(screen);
             _menus[screen.GetMenuID()] = screen;
             screen.Initialize(this);
-            if(screen.ShouldHideOnStart()) Hide(screen.GetMenuID());
+            Hide(screen.GetMenuID());
+            if(screen.ShouldShowOnStart()) Show(screen.GetMenuID());
         }
 
         public void Show(string id)
