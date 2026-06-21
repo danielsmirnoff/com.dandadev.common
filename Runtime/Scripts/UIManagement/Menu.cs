@@ -14,14 +14,16 @@ namespace CommonDan
     {
         [Tooltip("Only needed if not a unique class")]
         [SerializeField] private string id;
+        [SerializeField] private bool showOnStart;
+        [SerializeField] private bool hideOnOtherShow = true;
 
         // Events
         public UnityEvent OnMenuOpened { get; private set; } = new();
         public UnityEvent OnMenuClosed { get; private set; } = new();
     
         public virtual string GetMenuID() => id;
-        public virtual bool ShouldHideOnOtherShow() => true;
-        public virtual bool ShouldHideOnStart() => true;
+        public virtual bool ShouldHideOnOtherShow() => showOnStart;
+        public virtual bool ShouldHideOnStart() => hideOnOtherShow;
         public bool GetIsVisible() => isVisible;
 
         //Protected
