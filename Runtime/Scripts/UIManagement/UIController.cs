@@ -19,7 +19,7 @@ namespace CommonDan
         private Dictionary<string, Menu> _menus = new();
         private Stack<Menu> _menuStack = new();
 
-        void Awake()
+        public virtual void Awake()
         {
             foreach (var menu in _registeredMenus)
             {
@@ -27,7 +27,7 @@ namespace CommonDan
             }
         }
 
-        public void RegisterScreen(Menu screen, bool registerToList = true)
+        public virtual void RegisterScreen(Menu screen, bool registerToList = true)
         {
             if (debugMode) Debug.Log($"Registered {screen.GetMenuID()} as {screen.GetType().Name}");
             if(registerToList) _registeredMenus.Add(screen);
@@ -37,7 +37,7 @@ namespace CommonDan
             if(screen.ShouldShowOnStart()) Show(screen.GetMenuID());
         }
 
-        public void Show(string id)
+        public virtual void Show(string id)
         {
             if (!_menus.TryGetValue(id, out var screen))
             {
@@ -60,7 +60,7 @@ namespace CommonDan
             if (debugMode) Debug.Log($"Showing {screen.GetMenuID()} as {screen.GetType().Name}");
         }
 
-        public void Hide(string id)
+        public virtual void Hide(string id)
         {
             if (!_menus.TryGetValue(id, out var screen))
             {
@@ -80,7 +80,7 @@ namespace CommonDan
             // }
         }
 
-        public void Toggle(string id)
+        public virtual void Toggle(string id)
         {
             if (!_menus.TryGetValue(id, out var screen))
             {
@@ -98,7 +98,7 @@ namespace CommonDan
             if (debugMode) Debug.Log($"Toggling {screen.GetMenuID()} as {screen.GetType().Name}");
         }
 
-        public T GetMenu<T>(string id) where T : Menu
+        public virtual T GetMenu<T>(string id) where T : Menu
         {
             if (!_menus.TryGetValue(id, out var screen))
             {
@@ -115,7 +115,7 @@ namespace CommonDan
 
         /// <returns>Whether or not any menus were identified and closed.</returns>
         /// <param name="doForceClose">Should menus be hidden regardless of what ShouldHideOnOthersShow is set to?</param>
-        public bool CloseAllRegisteredMenus(bool doForceClose = false)
+        public virtual bool CloseAllRegisteredMenus(bool doForceClose = false)
         {
             bool foundMenu = false;
             foreach (Menu menu in _registeredMenus)
@@ -132,7 +132,7 @@ namespace CommonDan
 
         protected virtual bool TryCreateMenu(string id) { return false;}
 
-        public void Back()
+        public virtual void Back()
         {
             if (_menuStack.TryPop(out var current))
             {
